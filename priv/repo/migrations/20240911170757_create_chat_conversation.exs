@@ -3,7 +3,7 @@ defmodule CuriousMessanger.Repo.Migrations.CreateChatConversation do
 
   def change do
     create table(:chat_conversation) do
-      add :title, :string
+      add :title, :string, null: false
 
       timestamps(type: :utc_datetime)
     end

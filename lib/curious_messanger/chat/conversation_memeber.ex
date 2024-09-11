@@ -4,8 +4,9 @@ defmodule CuriousMessanger.Chat.ConversationMemeber do
 
   schema "chat_conversation_member" do
     field :owner, :boolean, default: false
-    field :conversation_id, :id
-    field :user_id, :id
+
+    belongs_to :user, User
+    belongs_to :conversation, Conversation
 
     timestamps(type: :utc_datetime)
   end
@@ -13,7 +14,11 @@ defmodule CuriousMessanger.Chat.ConversationMemeber do
   @doc false
   def changeset(conversation_memeber, attrs) do
     conversation_memeber
-    |> cast(attrs, [:owner])
-    |> validate_required([:owner])
+    |> cast(attrs, [:owner, :conversation_id, :user_id])
+    |> validate_required([:owner, :conversation_id, :user_id])
+    |> unique_constraint(:user, name: :chat_conversation_members_conversation_id_user_id_index)
+    |> unique_constraint(:conversation_id,
+      name: :chat_conversation_members_owner
+    )
   end
 end

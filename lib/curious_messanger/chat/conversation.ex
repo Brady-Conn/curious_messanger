@@ -5,6 +5,9 @@ defmodule CuriousMessanger.Chat.Conversation do
   schema "chat_conversation" do
     field :title, :string
 
+    has_many :conversation_members, ConversationMember
+    has_many :messages, Message
+
     timestamps(type: :utc_datetime)
   end
 

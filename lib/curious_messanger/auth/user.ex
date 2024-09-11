@@ -13,5 +13,6 @@ defmodule CuriousMessanger.Auth.User do
     user
     |> cast(attrs, [:nickname])
     |> validate_required([:nickname])
+    |> unique_constraint(:nickname)
   end
 end
